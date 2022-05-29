@@ -23,26 +23,26 @@ Stereo output is provided.
 
 There are three pages of menu accessible via the encoder. LED1 shows R, G and B respectively.
 
-R = MIX page
-  POT1 = Dry/Wet mix
-  POT2 = Stereo Spread (Odd vs Even bands panned ѕeparately).
+R = MIX page  
+&nbsp;&nbsp;POT1 = Dry/Wet mix  
+&nbsp;&nbsp;POT2 = Stereo Spread (Odd vs Even bands panned ѕeparately).  
 
-G = PHASE page
-  Button1 - Phase Noise or Phase Shift mode - LED2 toggles Red when in Phase Noise mode, otherwise it's in Phase Shift mode.
-  In Phase Noise mode - (LED2 Red/Purple)
-    POT1 = Amount of Noise modulation applied to each band
-    POT2 = Per Band BW multiplier
-  In Phase Shift mode - (LED2 Off/Blue)
-    POT1 = Shift amount (CCW is -ve, 12 o'clock is none, CW is +ve)
-    POT2 = Per Band BW multiplier
+G = PHASE page  
+&nbsp;&nbsp;Button1 - Phase Noise or Phase Shift mode - LED2 toggles Red when in Phase Noise mode, otherwise it's in Phase Shift mode.  
+&nbsp;&nbsp;In Phase Noise mode - (LED2 Red/Purple)  
+&nbsp;&nbsp;&nbsp;&nbsp;POT1 = Amount of Noise modulation applied to each band  
+&nbsp;&nbsp;&nbsp;&nbsp;POT2 = Per Band BW multiplier  
+&nbsp;&nbsp;In Phase Shift mode - (LED2 Off/Blue)  
+&nbsp;&nbsp;&nbsp;&nbsp;POT1 = Shift amount (CCW is -ve, 12 o'clock is none, CW is +ve)  
+&nbsp;&nbsp;&nbsp;&nbsp;POT2 = Per Band BW multiplier  
 
-B = DELAY page
-  Button2 - Delay Noise or Delay OSC mode - LED2 toggles Blue when in Delay Noise mode, otherwise it's in Delay Osc mode.
-  In Delay Noise mode - (LED2 Blue/Purple)
-    POT1 = Amount of Noise modulation applied to each band
-    POT2 = Unused
-    NOTE: Maybe this needs more work?  Sounds gritty.
-	  Updated on 20220529 with reworked random delay noise modulation - no more grit
-  In Delay Osc mode - (LED2 Red/Off)
-    POT1 = Delay Mod Rate
-    POT2 = Delay Mod Depth
+B = DELAY page  
+&nbsp;&nbsp;Button2 - Delay Noise or Delay OSC mode - LED2 toggles Blue when in Delay Noise mode, otherwise it's in Delay Osc mode.  
+&nbsp;&nbsp;In Delay Noise mode - (LED2 Blue/Purple)  
+&nbsp;&nbsp;&nbsp;&nbsp;POT1 = Amount of Noise modulation applied to each band  
+&nbsp;&nbsp;&nbsp;&nbsp;POT2 = Unused  
+&nbsp;&nbsp;&nbsp;&nbsp;NOTE: Maybe this needs more work?  Sounds gritty.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updated on 20220529 with reworked random delay noise modulation - no more grit  
+&nbsp;&nbsp;In Delay Osc mode - (LED2 Red/Off)  
+&nbsp;&nbsp;&nbsp;&nbsp;POT1 = Delay Mod Rate  
+&nbsp;&nbsp;&nbsp;&nbsp;POT2 = Delay Mod Depth  
