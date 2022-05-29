@@ -42,6 +42,7 @@ B = DELAY page
     POT1 = Amount of Noise modulation applied to each band
     POT2 = Unused
     NOTE: Maybe this needs more work?  Sounds gritty.
+	  Updated on 20220529 with reworked random delay noise modulation - no more grit
   In Delay Osc mode - (LED2 Red/Off)
     POT1 = Delay Mod Rate
     POT2 = Delay Mod Depth

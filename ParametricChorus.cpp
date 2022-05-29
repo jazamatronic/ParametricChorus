@@ -13,7 +13,12 @@ using namespace daisysp;
 #define SAMPLE_RATE	  48000
 
 //ms of delay
-#define MAX_DELAY	  (48 * 80)
+#define NOM_DELAY	  (48 * 40)
+#define MAX_MOD_DELAY	  NOM_DELAY
+#define DELAY_UPDATE_FREQ 10.0
+#define DELAY_UPDATE_SMPL (SAMPLE_RATE / DELAY_UPDATE_FREQ)
+#define DEL_OP_COEF	  (1.0 / DELAY_UPDATE_SMPL)
+#define MAX_DELAY	  (2 * NOM_DELAY)
 #define DOSC_MAX	  160
 #define TABLE_FUNDAMENTAL 220
 #define FIRST_BW	  40 
@@ -38,7 +43,10 @@ LFSR dlfsr[BANDS];
 
 // noise filtering
 iir_lp_nf pnoise_filt[BANDS];
-iir_lp_nf dnoise_filt[BANDS];
+int delnoise_cnt = 0;
+float cur_del[BANDS];
+float target_del[BANDS];
+
 
 static DelayLine<float, MAX_DELAY> DSY_SDRAM_BSS del[BANDS];
 
@@ -63,8 +71,14 @@ float CatchParam(float old, float cur, float thresh);
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
 	float bw;
-	float dnoise[BANDS];
 	float oscf, band_freq;
+	bool update_delay = false;
+  
+	delnoise_cnt += size;
+	if (delnoise_cnt > DELAY_UPDATE_SMPL) {
+	  update_delay = true;
+	  delnoise_cnt = 0;
+	}
 
 	// single channel in - break it down to bands
 	fb.Process(&in[0][0]);	
@@ -87,15 +101,17 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	  osc[i].SetFreq(oscf);
 
 	  if (del_noise_mode) {
-	    float tmp_dnoise = dnoise_filt[i].Process(dlfsr[i].Process());
-	    tmp_dnoise = dnoise[i] = (tmp_dnoise > 1.0) ?  1.0 : (tmp_dnoise < -1.0) ? -1.0 : tmp_dnoise;
-	    dnoise[i] = MAX_DELAY / 2 + tmp_dnoise * (cur_delnoise * MAX_DELAY / 2);
+	    if (update_delay) {
+	     float tmp_dnoise = dlfsr[i].Process();
+	     target_del[i] = NOM_DELAY + (cur_delnoise * tmp_dnoise * MAX_MOD_DELAY);
+	    }
 	  } else {
 	    dosc[i].SetFreq(cur_delfreq * DOSC_MAX);
 	  }
 
 	  bw *= cur_bwm;
 	}
+	update_delay = false;
 
 	// apply modulation to PDN output per sample per band
 	for (size_t i = 0; i < size; i++)
@@ -113,9 +129,12 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 	    osc[j].Process();
 	    dosc[j].Process();
 	    if (!del_noise_mode) {
-	      dnoise[j] = (float)(((dosc[j].InPhase(0) + 1) / 2.0) * cur_deldepth);
+	      float tmp_dnoise = dosc[j].InPhase(0);
+	      cur_del[j] = NOM_DELAY + (tmp_dnoise * cur_deldepth * MAX_MOD_DELAY);
+	    } else {
+	      fonepole(cur_del[j], target_del[j], DEL_OP_COEF);
 	    }
-	    float fs = del[j].ReadHermite(dnoise[j]);
+	    float fs = del[j].Read(cur_del[j]);
 	    del[j].Write(((pdn[j].r_out[i] * osc[j].InPhase(0)) \
 		        + (pdn[j].i_out[i] * osc[j].QuadPhase(0))));
 	    if (even) {
@@ -225,7 +244,6 @@ int main(void)
  	   * (output may actually be higher than that...)
 	   */
 	  pnoise_filt[i].Init(0.054699, 0.054699, -0.99869); 
-	  dnoise_filt[i].Init(0.054699, 0.054699, -0.99869);
 
 	  del[i].Init();
 	}
