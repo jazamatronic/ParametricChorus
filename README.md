@@ -46,3 +46,6 @@ B = DELAY page
 &nbsp;&nbsp;In Delay Osc mode - (LED2 Red/Off)  
 &nbsp;&nbsp;&nbsp;&nbsp;POT1 = Delay Mod Rate  
 &nbsp;&nbsp;&nbsp;&nbsp;POT2 = Delay Mod Depth  
+
+[![Parametric Chorus Demo](https://imgur.com/HxNEgoC)]  
+
