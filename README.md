@@ -47,5 +47,6 @@ B = DELAY page
 &nbsp;&nbsp;&nbsp;&nbsp;POT1 = Delay Mod Rate  
 &nbsp;&nbsp;&nbsp;&nbsp;POT2 = Delay Mod Depth  
 
-[![Parametric Chorus Demo](https://imgur.com/HxNEgoC)]  
+A kind of demo available if you click here
+[![Parametric Chorus Demo](https://i.imgur.com/HxNEgoC.png)](https://imgur.com/HxNEgoC "Parametric Chorus Demo")
 
